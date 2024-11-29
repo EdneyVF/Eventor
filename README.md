@@ -9,3 +9,15 @@ Integrantes do projeto:
  - Mateus Bruno Trigueiro - 2325500
  - Raquel Gonçalves Do Carmo Santana - 2326635
  - Vitor Samuel da Silva Mendonca - 2326326
+
+ To run:
+ - install MongoDB
+ - install NodeJS
+
+ In frontend folder:
+  - npm install
+  - npm run dev
+
+ In backend folder:
+  - npm install
+  - npm run dev
