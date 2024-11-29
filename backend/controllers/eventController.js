@@ -1,13 +1,11 @@
 const Event = require('../models/Event');
 const asyncHandler = require('express-async-handler');
 
-// Listar todos os eventos
 const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find();
   res.status(200).json(events);
 });
 
-// Criar um novo evento
 const createEvent = asyncHandler(async (req, res) => {
   const { title, description, date, location } = req.body;
 
@@ -26,7 +24,6 @@ const createEvent = asyncHandler(async (req, res) => {
   res.status(201).json(newEvent);
 });
 
-// Visualizar um evento específico
 const getEventById = asyncHandler(async (req, res) => {
   const event = await Event.findById(req.params.id);
 
@@ -38,7 +35,6 @@ const getEventById = asyncHandler(async (req, res) => {
   res.status(200).json(event);
 });
 
-// Editar um evento existente
 const updateEvent = asyncHandler(async (req, res) => {
   const { title, description, date, location } = req.body;
 
@@ -58,7 +54,6 @@ const updateEvent = asyncHandler(async (req, res) => {
   res.status(200).json(updatedEvent);
 });
 
-// Deletar um evento
 const deleteEvent = asyncHandler(async (req, res) => {
   const event = await Event.findById(req.params.id);
 
@@ -67,7 +62,7 @@ const deleteEvent = asyncHandler(async (req, res) => {
     throw new Error('Evento não encontrado');
   }
 
-  await event.remove();
+  await event.deleteOne({ _id: req.params.id });
   res.status(200).json({ message: 'Evento deletado com sucesso' });
 });
 

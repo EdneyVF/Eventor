@@ -2,9 +2,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 
-// Registrar usuário
 const register = asyncHandler(async (req, res) => {
-  // Correct destructuring from req.body
   const { name, email, password } = req.body;
   
   if (!name || !email || !password) {
@@ -36,7 +34,6 @@ const register = asyncHandler(async (req, res) => {
   }
 });
 
-// Login de usuário
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -48,13 +45,13 @@ const login = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
+      role: user.role,
     });
   } else {
     res.status(401).json({ message: 'Invalid email or password' });
   }
 });
 
-// Gerar token JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };

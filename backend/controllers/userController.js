@@ -1,13 +1,11 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 
-// Listar todos os usuários
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().select('-password'); // Exclui o campo senha da resposta
   res.status(200).json(users);
 });
 
-// Deletar um usuário
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -16,11 +14,10 @@ const deleteUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  await user.remove();
+  await User.deleteOne({ _id: req.params.id });
   res.status(200).json({ message: 'User deleted successfully' });
 });
 
-// Atualizar informações de um usuário
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -29,7 +26,6 @@ const updateUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  // Atualiza os campos enviados na requisição, caso existam
   user.name = req.body.name || user.name;
   user.email = req.body.email || user.email;
   user.role = req.body.role || user.role;
@@ -38,7 +34,6 @@ const updateUser = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser);
 });
 
-// Obter um usuário específico
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password'); // Exclui o campo senha da resposta
 
